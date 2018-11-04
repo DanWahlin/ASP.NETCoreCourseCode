@@ -1,0 +1,18 @@
+﻿@page "{id:int}"
+
+@model RazorMovies.Pages.MovieModel
+@{
+    ViewData["Title"] = "Movie";
+}
+
+<h2>Movie</h2>
+
+ID: @Model.Movie.Id
+<br />
+Title: @Model.Movie.Title
+<br />
+Director: @Model.Movie.Director
+
+<br /><br />
+<a asp-page="Index">Show All Movies</a>
+
