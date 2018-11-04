@@ -1,0 +1,25 @@
+﻿@model StronglyTypedViews.Models.MoviesViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Movies and Categories</h2>
+
+<h3>Movies</h3>
+<ul>
+    @foreach (var movie in Model.Movies)
+    {
+        <li>@movie.Title</li>
+    }
+</ul>
+
+<br />
+
+<h3>Categories</h3>
+<ul>
+    @foreach (var cat in Model.MovieCategories)
+    {
+        <li>@cat.Genre</li>
+    }
+</ul>
+
