@@ -61,7 +61,7 @@ namespace TagHelpersAndViewComponents.TagHelpers
                     }
                 })();
                 </script>");
-            sb.Append("<script src='http://maps.google.com/maps/api/js?key=AIzaSyBnfvR2KoVNAjdYs-GpXjNPwqc9PoqVr4U&sensor=false'></script>");
+            sb.Append("<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCG1KDldeF_2GzaTXrEHR0l6cyCS7AnmBw'></script>");
 
             output.Content.AppendHtml(sb.ToString());
             base.Process(context, output);

@@ -39,7 +39,7 @@ namespace EFCRUD
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<IMoviesRepository, MoviesRepository>();
             services.AddTransient<MoviesDbSeeder>();
@@ -55,10 +55,8 @@ namespace EFCRUD
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
