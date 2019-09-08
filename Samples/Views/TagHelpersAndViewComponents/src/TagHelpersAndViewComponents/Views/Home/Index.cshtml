@@ -12,8 +12,13 @@
               lastName="@Model.LastName"></customerCard>
 
 <br />
-<h4>Customers View Component</h4>
+<h4>Customers View Component (using Component.InvokeAsync)</h4>
 
 @await Component.InvokeAsync("Customers", new { max = 10 }) 
+
+<br /><br />
+<h4>Customers View Component (using Component Tag)</h4>
+
+<vc:customers max="10"></vc:customers>
 
 
