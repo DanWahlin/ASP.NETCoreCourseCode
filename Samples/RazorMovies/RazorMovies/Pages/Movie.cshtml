@@ -1,0 +1,10 @@
+﻿@page "{id:int}"
+@model MovieModel
+@{
+    ViewData["Title"] = Model.Movie.Title;
+}
+<a class="nav-link" asp-area="" asp-page="/Index">< Back to List</a>
+<h1>Movie Id: @Model.Movie.Id</h1>
+<h2>@Model.Movie.Title</h2>
+<p>@Model.Movie.Director</p>
+<img style="width: 400px;" src="@Model.Movie.ImageUrl" alt="Movie Poster" />

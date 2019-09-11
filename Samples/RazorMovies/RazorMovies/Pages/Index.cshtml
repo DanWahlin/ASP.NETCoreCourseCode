@@ -1,0 +1,16 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Movies - Home";
+}
+
+<h1>Movies</h1>
+<ul style="list-style-type:none; margin-left: 0; padding-left: 15px;border: 1px #333 solid;
+    border-radius: 3px; width: 430px; padding-bottom: 10px;">
+    @foreach (var movie in Model.Movies)
+    {
+    <li style="margin-top: 10px; min-width: 500px;">
+        <a class="btn-lg btn-outline-info" style="width: 400px; display: inline-block;" asp-area="" asp-page="/Movie" asp-route-id=@movie.Id><b>@movie.Title</b>, by @movie.Director</a>
+    </li>
+    }
+</ul>
