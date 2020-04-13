@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UsingIdentity.Areas.Identity.Data;
 using UsingIdentity.Data;
-using UsingIdentity.Models;
 
 [assembly: HostingStartup(typeof(UsingIdentity.Areas.Identity.IdentityHostingStartup))]
 namespace UsingIdentity.Areas.Identity
@@ -16,6 +16,12 @@ namespace UsingIdentity.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                services.AddDbContext<UsingIdentityContext>(options =>
+                    options.UseSqlite(
+                        context.Configuration.GetConnectionString("UsingIdentityContextConnection")));
+
+                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<UsingIdentityContext>();
             });
         }
     }

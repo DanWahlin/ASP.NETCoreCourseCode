@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace UsingMapWithMiddleware
 {
@@ -23,10 +24,10 @@ namespace UsingMapWithMiddleware
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddControllers();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseStaticFiles();
 
@@ -36,9 +37,18 @@ namespace UsingMapWithMiddleware
                 await next();
             });
 
+            Console.WriteLine("Visit http://localhost:8000/customers");
             app.Map("/customers", HandleCustomersRoute);
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
         }
 
         private static void HandleCustomersRoute(IApplicationBuilder app)

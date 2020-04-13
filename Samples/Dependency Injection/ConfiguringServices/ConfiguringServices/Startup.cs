@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using ConfiguringServices.Filters;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Hosting;
 
 namespace ConfiguringServices
 {
@@ -25,26 +26,24 @@ namespace ConfiguringServices
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                //Add custom exception filter
-                options.Filters.Add(typeof(CustomExceptionFilter));
-                
-                //Convert null responses from Action to a 204
-                options.OutputFormatters.Add(new HttpNoContentOutputFormatter());
-            });
-
-            // Demonstrate removing default Camel Casing for JSON for a client
-            services.AddMvcCore().AddJsonFormatters(jsonFormatter =>
-            {
-                jsonFormatter.ContractResolver = new DefaultContractResolver();
-            });
-
+            services.AddControllers();
+            
+            // If you want to use the NewtonsoftJson package you can do the following
+            // services.AddControllers().AddNewtonsoftJson(options =>
+            // {
+            //     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            // });
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

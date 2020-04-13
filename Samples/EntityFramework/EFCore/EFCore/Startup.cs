@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using EFCore.Repository;
 
 namespace EFCore
@@ -34,16 +35,14 @@ namespace EFCore
                 options.UseSqlite(Configuration.GetConnectionString("MoviesSqlite"));
             });
 
-            services.AddMvc();
+            services.AddControllersWithViews();
 
             services.AddScoped<IMoviesRepository, MoviesRepository>();
             services.AddTransient<Seeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, 
-            IHostingEnvironment env,
-            Seeder seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -56,11 +55,13 @@ namespace EFCore
             
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             seeder.SeedAsync().Wait();

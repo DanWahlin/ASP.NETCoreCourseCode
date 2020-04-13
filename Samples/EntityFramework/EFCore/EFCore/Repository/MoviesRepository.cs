@@ -34,7 +34,7 @@ namespace EFCore.Repository
         public async Task<List<Movie>> GetRawMovies()
         {
             return await _context.Movies
-                .FromSql("SELECT * FROM Movies")
+                .FromSqlRaw("SELECT * FROM Movies")
                 .ToListAsync();
         }
     }

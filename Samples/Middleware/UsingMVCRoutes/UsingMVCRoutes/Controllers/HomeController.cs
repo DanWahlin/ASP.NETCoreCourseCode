@@ -10,6 +10,7 @@ namespace UsingMVCMiddleware.Controllers
     {
         public IActionResult Index()
         {
+            // throw new ApplicationException("foo");
             return View();
         }
     }

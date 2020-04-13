@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace EFCRUD
 {
@@ -39,14 +40,14 @@ namespace EFCRUD
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews();
 
             services.AddScoped<IMoviesRepository, MoviesRepository>();
             services.AddTransient<MoviesDbSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, MoviesDbSeeder moviesDbSeeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MoviesDbSeeder moviesDbSeeder)
         {
             if (env.IsDevelopment())
             {
@@ -59,12 +60,16 @@ namespace EFCRUD
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            
+            app.UseRouting();
 
-            app.UseMvc(routes =>
+            Console.WriteLine("Visit http://localhost:5000/movies");
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Movies}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             moviesDbSeeder.SeedAsync(app.ApplicationServices).Wait();
