@@ -11,7 +11,7 @@ namespace ModelBinderLab.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new List<Movie>());
         }
 
         public IActionResult Create()

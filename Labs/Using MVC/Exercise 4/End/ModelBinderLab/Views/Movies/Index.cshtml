@@ -1,0 +1,15 @@
+﻿@model List<ModelBinderLab.Models.Movie>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Movies and Categories</h2>
+
+<h3>Movies</h3>
+<ul>
+    @foreach (var movie in Model)
+    {
+        <li>@movie.Title</li>
+    }
+</ul>
+
